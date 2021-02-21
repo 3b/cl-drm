@@ -26,4 +26,5 @@
    event-context
    version
    vblank-handler
-   page-flip-handler))
+   page-flip-handler
+   get-cap))

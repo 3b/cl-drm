@@ -203,3 +203,27 @@
 (defcfun ("drmHandleEvent" handle-event) :int
   (fd :int)
   (event-context (:pointer (:struct event-context))))
+
+(cffi:defcenum (drm-caps :uint64)
+  (:dumb-buffer #x1)
+  (:vblank-high-crtc #x2)
+  (:dumb-preferred-depth #x3)
+  (:dumb-prefer-shadow #x4)
+  (:prime #x5)
+  (:timestamp-monotonic #x6)
+  (:async-page-flip #x7)
+  (:cursor-width #x8)
+  (:cursor-height #x9)
+  (:addfb2-modifiers #x10)
+  (:page-flip-target #x11))
+
+(cffi:defcfun ("drmGetCap" %get-cap) :int
+  (fd :int)
+  (cap drm-caps)
+  (value (:pointer :uint64)))
+
+(defun get-cap (fd cap)
+  (cffi:with-foreign-objects ((v :uint64))
+    (%get-cap fd cap v)
+    (cffi:mem-ref v :uint64)))
+
