@@ -27,4 +27,7 @@
    version
    vblank-handler
    page-flip-handler
-   get-cap))
+   get-cap
+   #:mode-width
+   #:mode-height
+   #:crtc-crtc-id))

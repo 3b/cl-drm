@@ -50,6 +50,12 @@
   (type :uint32)
   (name :char :count 32))
 
+(defun mode-width (mode)
+  (foreign-slot-value mode '(:struct mode-mode-info) 'hdisplay))
+
+(defun mode-height (mode)
+  (foreign-slot-value mode '(:struct mode-mode-info) 'vdisplay))
+
 (defcstruct mode-connector
   (connector-id :uint32)
   (encoder-id :uint32)
@@ -120,6 +126,9 @@
   (mode-valid :int)
   (mode (:struct mode-mode-info))
   (gamma-size :int))
+
+(defun crtc-crtc-id (crtc)
+  (cffi:foreign-slot-value crtc '(:struct drm:mode-crtc) 'drm:crtc-id))
 
 (defcfun ("drmModeGetCrtc" mode-get-crtc) (:pointer (:struct mode-crtc))
   (fd :int)
